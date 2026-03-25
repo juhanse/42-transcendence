@@ -46,6 +46,7 @@ export class AuthService {
 				{ username: ILike(identifier) },
 			],
 		});
+
 		if (!user) throw new UnauthorizedException();
 
 		const isValid = await bcrypt.compare(password, user.passwordHash);
@@ -59,28 +60,25 @@ export class AuthService {
 			const payload = this.jwtService.verify<JwtPayload>(refreshToken, {
 				secret: process.env.JWT_REFRESH_SECRET,
 			});
-
+	
 			const user = await this.userRepository.findOne({
 				where: { id: payload.sub },
 			});
-			if (!user || !user.refreshToken)
-				throw new UnauthorizedException();
-
-			const isValid = await bcrypt.compare(
-				refreshToken,
-				user.refreshToken,
-			);
-			if (!isValid) throw new UnauthorizedException();
-
+	
+			if (!user) throw new UnauthorizedException();
+	
 			const access_token = this.jwtService.sign(
 				{
 					sub: user.id,
 					email: user.email,
 					role: user.role,
 				},
-				{ expiresIn: '15m' },
+				{
+					secret: process.env.JWT_SECRET,
+					expiresIn: '15m',
+				},
 			);
-
+	
 			return { access_token };
 		} catch {
 			throw new UnauthorizedException();
@@ -88,9 +86,8 @@ export class AuthService {
 	}
 
 	async logout(userId: number) {
-		await this.userRepository.update(userId, {
-			refreshToken: null,
-		});
+		if (!userId) throw new UnauthorizedException();
+		await this.userRepository.update(userId, { refreshToken: null });
 		return { success: true };
 	}
 
@@ -102,12 +99,13 @@ export class AuthService {
 		};
 
 		const access_token = this.jwtService.sign(payload, {
+			secret: process.env.JWT_SECRET,
 			expiresIn: '15m',
 		});
 
 		const refresh_token = this.jwtService.sign(payload, {
-			expiresIn: '7d',
 			secret: process.env.JWT_REFRESH_SECRET,
+			expiresIn: '7d',
 		});
 
 		const hashedRefresh = await bcrypt.hash(refresh_token, 10);

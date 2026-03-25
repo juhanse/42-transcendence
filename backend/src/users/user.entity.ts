@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -17,7 +17,7 @@ export class User {
 	@Column({ nullable: true })
 	role: string;
 
-	@Column({ name: 'refresh_token', nullable: true })
+	@Column({ name: 'refresh_token', type: 'text', nullable: true, select: false })
 	refreshToken: string | null;
 
 	@Column({ name: 'avatar_url', nullable: true })
@@ -41,10 +41,6 @@ export class User {
 
 	@Column({ name: 'grade_id', nullable: true })
 	gradeId: number;
-
-	@ManyToOne(() => Object, { nullable: true })
-	@JoinColumn({ name: 'grade_id' })
-	grade: any;
 
 	@UpdateDateColumn({ name: 'updated_at' })
 	updatedAt: Date;
