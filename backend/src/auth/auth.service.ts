@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../users/user.entity';
 import { RegisterUserDto } from './dto/register.dto';
 import { LoginUserDto } from './dto/login.dto';
+import { JwtPayload } from './strategies/jwt.strategy';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +56,7 @@ export class AuthService {
 
 	async refresh(refreshToken: string) {
 		try {
-			const payload = this.jwtService.verify(refreshToken, {
+			const payload = this.jwtService.verify<JwtPayload>(refreshToken, {
 				secret: process.env.JWT_REFRESH_SECRET,
 			});
 
