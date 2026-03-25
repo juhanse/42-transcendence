@@ -43,10 +43,7 @@ export class UsersService {
 			dataToUpdate.passwordHash = await hash(password, 10);
 		}
 
-		const updatedUser = await this.userRepository.save({
-			id,
-			...dataToUpdate,
-		});
+		await this.userRepository.save({ id, ...dataToUpdate });
 
 		return this.getUser(id);
 	}
