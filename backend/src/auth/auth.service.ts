@@ -4,9 +4,9 @@ import { ILike, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../common/models/user.entity';
-import { RegisterUserDto } from './dto/register.dto';
-import { LoginUserDto } from './dto/login.dto';
-import { JwtPayload } from './strategies/jwt.strategy';
+import { RegisterUserDto } from '../common/dto/register.dto';
+import { LoginUserDto } from '../common/dto/login.dto';
+import { JwtPayload } from '../common/strategies/jwt.strategy';
 
 @Injectable()
 export class AuthService {
