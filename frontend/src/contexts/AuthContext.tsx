@@ -1,12 +1,6 @@
 import { createContext,	useContext,	useEffect, useState, type ReactNode } from 'react';
-import { login as loginService, logout as logoutService, getMe, type User } from '../services/userService';
-
-type AuthContextType = {
-	user: User | null;
-	isAuthenticated: boolean;
-	login: (identifier: string, password: string) => Promise<void>;
-	logout: () => Promise<void>;
-};
+import { login as loginService, logout as logoutService, getMe } from '../services/userService';
+import type { User, AuthContextType } from '../types/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
