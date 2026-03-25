@@ -4,8 +4,7 @@ import { ILike, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../common/models/user.entity';
-import { RegisterUserDto } from '../common/dto/register.dto';
-import { LoginUserDto } from '../common/dto/login.dto';
+import { LoginUserDto, RegisterUserDto } from '../common/dtos/users.dto';
 import { JwtPayload } from '../common/strategies/jwt.strategy';
 
 @Injectable()

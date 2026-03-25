@@ -1,7 +1,6 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegisterUserDto } from '../common/dto/register.dto';
-import { LoginUserDto } from '../common/dto/login.dto';
+import { LoginUserDto, RegisterUserDto } from '../common/dtos/users.dto';
 import { JwtAuthGuard } from '../common/strategies/jwt.guard';
 import { JwtPayload } from '../common/strategies/jwt.strategy';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
