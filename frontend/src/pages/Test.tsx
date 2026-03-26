@@ -13,7 +13,7 @@ export default function Test() {
 
   const [connected, setConnected] = useState(false);
   const [code, setCode] = useState("");
-  const [userId, setUserId] = useState<number>(Math.floor(Math.random() * 1000));
+  const [userId, setUserId] = useState<number>(() => Math.floor(Math.random() * 1000));
   const [miniGames, setMiniGames] = useState("quiz,pong");
   const [leaderboard, setLeaderboard] = useState<Leaderboard>([]);
   const [logs, setLogs] = useState<string[]>([]);
