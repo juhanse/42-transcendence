@@ -1,7 +1,20 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext,	useContext,	useEffect, useState, type ReactNode } from 'react';
 import { login as loginService, logout as logoutService, getMe } from '../services/userService';
-import type { User, AuthContextType } from '../types/auth';
+
+export type User = {
+	id: number;
+	email: string;
+	role: string;
+};
+
+export type AuthContextType = {
+	user: User | null;
+	isAuthenticated: boolean;
+	login: (identifier: string, password: string) => Promise<void>;
+	logout: () => Promise<void>;
+};
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
