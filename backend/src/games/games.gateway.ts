@@ -1,6 +1,7 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody, ConnectedSocket, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { GamesService } from './games.service';
+import { CreateGame, InteractGame, PointsGame } from 'src/common/types/games';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class GamesGateway {
@@ -11,7 +12,7 @@ export class GamesGateway {
 
 	// 🔹 CREATE GAME
 	@SubscribeMessage('createGame')
-	handleCreateGame(@MessageBody() body: { userId: number; miniGames: string[] }, @ConnectedSocket() client: Socket) {
+	handleCreateGame(@MessageBody() body: CreateGame, @ConnectedSocket() client: Socket) {
 		const game = this.gamesService.createGame(body.userId, body.miniGames);
 
 		void client.join(game.code);
@@ -21,7 +22,7 @@ export class GamesGateway {
 
 	// 🔹 JOIN GAME
 	@SubscribeMessage('joinGame')
-	handleJoinGame(@MessageBody() body: { userId: number; code: string }, @ConnectedSocket() client: Socket) {
+	handleJoinGame(@MessageBody() body: InteractGame, @ConnectedSocket() client: Socket) {
 		const game = this.gamesService.joinGame(body.code, body.userId, client.id);
 
 		void client.join(game.code);
@@ -35,7 +36,7 @@ export class GamesGateway {
 
 	// 🔹 START GAME
 	@SubscribeMessage('startGame')
-	handleStartGame(@MessageBody() body: { userId: number; code: string }) {
+	handleStartGame(@MessageBody() body: InteractGame) {
 		const game = this.gamesService.startGame(body.code, body.userId);
 
 		this.server.to(body.code).emit('gameStarted', {
@@ -45,7 +46,7 @@ export class GamesGateway {
 
 	// 🔹 SCORE UPDATE
 	@SubscribeMessage('submitScore')
-	handleScore(@MessageBody() body: { userId: number; code: string; points: number }) {
+	handleScore(@MessageBody() body: PointsGame) {
 		this.gamesService.addScore(body.code, body.userId, body.points);
 
 		const leaderboard = this.gamesService.getLeaderboard(body.code);
