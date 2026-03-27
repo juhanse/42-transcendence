@@ -9,11 +9,7 @@ import { JwtPayload } from '../common/strategies/jwt.strategy';
 
 @Injectable()
 export class AuthService {
-	constructor(
-		@InjectRepository(User)
-		private readonly userRepository: Repository<User>,
-		private readonly jwtService: JwtService,
-	) {}
+	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>, private readonly jwtService: JwtService) {}
 
 	async register({ authregister }: { authregister: RegisterUserDto }) {
 		const { username, email, password } = authregister;
