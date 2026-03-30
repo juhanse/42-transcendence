@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useModal } from '../contexts/ModalContext';
 
 export default function Home() {
+  const { openModal, isLoggedIn } = useModal();
+
+  const handlePlay = () => {
+    console.log(openModal, isLoggedIn);
+    openModal(isLoggedIn ? "JOIN" : "LOGIN");
+  };
+
   return (
     <div
       className="relative min-h-screen w-full overflow-hidden bg-slate-900 bg-cover bg-center text-white font-sans"
@@ -39,12 +47,12 @@ export default function Home() {
           />
         </div>
 
-        <Link
-          to="/game"
+        <button
+          onClick={handlePlay}
           className="mb-10 w-72 rounded-2xl border-2 border-white/80 bg-[#E43A70] py-4 text-center text-3xl font-black tracking-wide text-white shadow-xl drop-shadow-lg transition-transform hover:scale-105"
         >
           Jouer
-        </Link>
+        </button>
 
         <nav className="mb-16 flex flex-col gap-5 text-xl font-bold drop-shadow-md">
           <Link to="/faq" className="w-fit hover:text-[#E43A70] transition-colors">
