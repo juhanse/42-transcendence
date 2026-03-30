@@ -11,20 +11,20 @@ export function ModalRoot() {
 
 	return (
 		<>
-		{step && (
-			<div
-				className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
-				onClick={closeModal}
-			>
-				<div className="bg-white p-6 rounded shadow-lg" onClick={e => e.stopPropagation()}>
-					{step === "LOGIN" && <LoginModal />}
-					{step === "REGISTER" && <RegisterModal />}
-					{step === "JOIN" && <JoinGameModal />}
-					{step === "CREATE" && <CreateGameModal />}
-					{step === "LAUNCH" && <LaunchGameModal />}
+			{step && (
+				<div
+					className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+					onClick={closeModal}
+				>
+					<div className="bg-white p-6 rounded shadow-lg" onClick={e => e.stopPropagation()}>
+						{step === "LOGIN" && <LoginModal />}
+						{step === "REGISTER" && <RegisterModal />}
+						{step === "JOIN" && <JoinGameModal />}
+						{step === "CREATE" && <CreateGameModal />}
+						{step === "LAUNCH" && <LaunchGameModal />}
+					</div>
 				</div>
-			</div>
-		)}
+			)}
 		</>
 	);
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { ModalRoot } from "./ModalRoot";
 export type ModalStep = null | "LOGIN" | "REGISTER" | "JOIN" | "CREATE" | "LAUNCH";
