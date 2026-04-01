@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomBytes } from 'crypto';
 import { User } from 'src/common/models/user.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 type Player = {
 	userId: number;
@@ -67,22 +67,46 @@ export class GamesService {
 		return game;
 	}
 
-	getLeaderboard(count: number, code?: string) {
+	async getLeaderboard(count: number, code?: string) {
 		if (code) {
 			const game = this.games.get(code);
 			if (!game) return [];
 
-			return Array.from(game.players.values()).sort((a, b) => b.score - a.score).slice(0, count);
+			const players = Array.from(game.players.values())
+				.sort((a, b) => b.score - a.score)
+				.slice(0, count);
+
+			const userIds = players.map(p => p.userId);
+
+			const users = await this.userRepository.find({
+				where: { id: In(userIds) },
+				select: ['id', 'username', 'avatarUrl'],
+			});
+
+			return players.map(player => {
+				const user = users.find(u => u.id === player.userId);
+
+				return {
+					id: user?.id,
+					username: user?.username,
+					avatarUrl: user?.avatarUrl,
+					score: player.score,
+				};
+			});
 		}
 
-		const users = this.userRepository.find({
-			order: {
-				xpTotal: 'DESC',
-			},
+		const users = await this.userRepository.find({
+			select: ['id', 'username', 'avatarUrl', 'xpTotal'],
+			order: { xpTotal: 'DESC' },
 			take: count,
 		});
 
-		return users;
+		return users.map(u => ({
+			id: u.id,
+			username: u.username,
+			avatarUrl: u.avatarUrl,
+			score: u.xpTotal,
+		}));
 	}
 
 	addScore(code: string, userId: number, points: number) {
