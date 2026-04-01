@@ -15,6 +15,7 @@ export const Leaderboard: React.FC = () => {
 				const data = await getLeadboard(5);
 				setTopUsers(data);
 			} catch (err) {
+				console.log(err);
 				if (isMounted) setError('Erreur lors du chargement du classement.');
 				if (isMounted) setIsLoading(false);
 			}
@@ -39,7 +40,7 @@ export const Leaderboard: React.FC = () => {
 				fontFamily: "'Lexend', sans-serif"
 			}}
 		>
-			<h2 className="text-white text-[20px] font-medium m-0 p-0 leading-none">
+			<h2 className="text-[#F8F3F5] text-[20px] font-medium m-0 p-0 leading-none">
 				Classement
 			</h2>
 
