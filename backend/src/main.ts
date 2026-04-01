@@ -6,7 +6,7 @@ async function bootstrap() {
 
   app.useLogger(['log', 'error', 'warn', 'debug', 'verbose']);
   app.enableCors({
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:5173',
   });
 
   await app.listen(process.env.PORT ?? 3000);
