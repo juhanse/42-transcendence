@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { randomBytes } from 'crypto';
+import { User } from 'src/common/models/user.entity';
+import { Repository } from 'typeorm';
 
 type Player = {
 	userId: number;
@@ -18,6 +21,8 @@ type Game = {
 
 @Injectable()
 export class GamesService {
+	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
+
 	private games = new Map<string, Game>();
 
 	private generateCode(): string {
@@ -62,11 +67,22 @@ export class GamesService {
 		return game;
 	}
 
-	getLeaderboard(code: string) {
-		const game = this.games.get(code);
-		if (!game) return [];
+	getLeaderboard(count: number, code?: string) {
+		if (code) {
+			const game = this.games.get(code);
+			if (!game) return [];
 
-		return Array.from(game.players.values()).sort((a, b) => b.score - a.score);
+			return Array.from(game.players.values()).sort((a, b) => b.score - a.score).slice(0, count);
+		}
+
+		const users = this.userRepository.find({
+			order: {
+				xpTotal: 'DESC',
+			},
+			take: count,
+		});
+
+		return users;
 	}
 
 	addScore(code: string, userId: number, points: number) {

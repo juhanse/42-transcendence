@@ -8,7 +8,7 @@ export class GamesGateway {
 	@WebSocketServer()
 	server: Server;
 
-	constructor(private readonly gamesService: GamesService) {}
+	constructor(private readonly gamesService: GamesService) { }
 
 	// 🔹 CREATE GAME
 	@SubscribeMessage('createGame')
@@ -49,7 +49,7 @@ export class GamesGateway {
 	handleScore(@MessageBody() body: PointsGame) {
 		this.gamesService.addScore(body.code, body.userId, body.points);
 
-		const leaderboard = this.gamesService.getLeaderboard(body.code);
+		const leaderboard = this.gamesService.getLeaderboard(5, body.code);
 		this.server.to(body.code).emit('leaderboardUpdate', leaderboard);
 	}
 
@@ -59,7 +59,7 @@ export class GamesGateway {
 		const next = this.gamesService.nextMiniGame(body.code);
 
 		if (next === 'END') {
-			const leaderboard = this.gamesService.getLeaderboard(body.code);
+			const leaderboard = this.gamesService.getLeaderboard(5, body.code);
 
 			this.server.to(body.code).emit('gameEnded', leaderboard);
 			return;
