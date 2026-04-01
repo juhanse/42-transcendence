@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext,	useContext,	useEffect, useState, type ReactNode } from 'react';
-import { login as loginService, logout as logoutService, getMe } from '../services/userService';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { login as loginService, logout as logoutService } from '../services/authService';
+import { getMe } from '../services/userService';
 
 export type User = {
 	id: number;
