@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useModal } from '../contexts/ModalContext';
+import Leaderboard from '../components/ui/Leaderboard';
 
 export default function Home() {
   const { openModal, isLoggedIn } = useModal();
@@ -37,13 +38,14 @@ export default function Home() {
         </Link>
       </div>
 
+      <Leaderboard />
+
       <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-10 md:px-20 lg:px-32">
-        
         <div className="mb-10 max-w-sm drop-shadow-2xl">
-          <img 
-            src="/logo.png" 
-            alt="WhoIsChad" 
-            className="w-72 object-contain" 
+          <img
+            src="/logo.png"
+            alt="WhoIsChad"
+            className="w-72 object-contain"
           />
         </div>
 
@@ -56,13 +58,13 @@ export default function Home() {
 
         <nav className="mb-16 flex flex-col gap-5 text-xl font-bold drop-shadow-md">
           <Link to="/faq" className="w-fit hover:text-[#E43A70] transition-colors">
-            Classement
+            Les jeux
           </Link>
           <Link to="/hall-of-fleur" className="w-fit hover:text-[#E43A70] transition-colors">
             Subject
           </Link>
           <Link to="/proposer" className="w-fit hover:text-[#E43A70] transition-colors">
-          Credits
+            Credits
           </Link>
         </nav>
       </div>
