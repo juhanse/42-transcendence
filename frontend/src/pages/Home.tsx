@@ -38,7 +38,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <Leaderboard />
+      <Leaderboard count={5} />
 
       <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-10 md:px-20 lg:px-32">
         <div className="mb-10 max-w-sm drop-shadow-2xl">
