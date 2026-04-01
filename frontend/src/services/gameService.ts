@@ -8,6 +8,6 @@ export type LeaderboardType = {
 }[];
 
 export const getLeadboard = async (count: number): Promise<LeaderboardType> => {
-	const res = await api.get<LeaderboardType>('/games/leaderboard/', { params: { count } });
+	const res = await api.get<LeaderboardType>(`/games/leaderboard?count=${count}`);
 	return res.data;
 };
