@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getLeadboard, type LeaderboardType } from '../../services/gameService';
 
-export const Leaderboard: React.FC = () => {
+export default function Leaderboard() {
 	const [topUsers, setTopUsers] = useState<LeaderboardType>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -11,9 +11,9 @@ export const Leaderboard: React.FC = () => {
 
 		const fetchLeaderboard = async () => {
 			try {
-				setIsLoading(true);
 				const data = await getLeadboard(5);
 				setTopUsers(data);
+				setIsLoading(false);
 			} catch (err) {
 				console.log(err);
 				if (isMounted) setError('Erreur lors du chargement du classement.');
@@ -83,5 +83,3 @@ export const Leaderboard: React.FC = () => {
 		</div>
 	);
 };
-
-export default Leaderboard;
