@@ -17,7 +17,6 @@ export default function Home() {
     >
       <div className="absolute inset-0 bg-linear-to-r from-slate-900/90 via-slate-900/50 to-transparent" />
       <div className="relative z-10 flex h-full min-h-screen">
-        {/* Left side */}
         <div className="flex w-1/2 flex-col items-start gap-10 pl-10 pt-10">
           <img src="/logo.png" alt="WhoIsChad" className="w-72 object-contain drop-shadow-2xl" />
 
@@ -28,20 +27,30 @@ export default function Home() {
             Jouer
           </button>
 
-          <nav className="flex flex-col gap-5 text-xl font-bold drop-shadow-md">
-            <Link to="/faq" className="w-fit hover:text-[#E43A70] transition-colors">
-              Les jeux
-            </Link>
-            <Link to="/hall-of-fleur" className="w-fit hover:text-[#E43A70] transition-colors">
-              Subject
-            </Link>
-            <Link to="/proposer" className="w-fit hover:text-[#E43A70] transition-colors">
-              Credits
-            </Link>
-          </nav>
+          <div className="flex flex-1 flex-col justify-between mt-10">
+            <nav className="flex flex-col gap-5 text-xl font-bold">
+              <Link to="/faq" className="w-fit text-2xl hover:text-[#E43A70] transition-colors hover:scale-105">
+                Les jeux
+              </Link>
+              <Link to="/friends" className="w-fit text-2xl hover:text-[#E43A70] transition-colors hover:scale-105">
+
+                Mes amis
+              </Link>
+              <Link to="/history" className="w-fit text-2xl hover:text-[#E43A70] transition-colors hover:scale-105">
+                Historique
+              </Link>
+            </nav>
+            <nav className="flex flex-col gap-5 text-xl font-bold pb-10">
+              <Link to="/hall-of-fleur" className="w-fit text-2xl hover:text-[#E43A70] transition-colors hover:scale-105">
+                Subject
+              </Link>
+              <Link to="/proposer" className="w-fit text-2xl hover:text-[#E43A70] transition-colors hover:scale-105">
+                Credits
+              </Link>
+            </nav>
+          </div>
         </div>
 
-        {/* Right side */}
         <div className="flex w-1/2 flex-col items-end gap-10 pr-10 pt-10">
           <Link
             to="/login"
