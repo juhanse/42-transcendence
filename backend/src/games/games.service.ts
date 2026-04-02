@@ -3,21 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { randomBytes } from 'crypto';
 import { User } from 'src/common/models/user.entity';
 import { In, Repository } from 'typeorm';
-
-type Player = {
-	userId: number;
-	socketId: string;
-	score: number;
-};
-
-type Game = {
-	code: string;
-	hostId: number;
-	players: Map<number, Player>;
-	miniGames: string[];
-	currentMiniGameIndex: number;
-	started: boolean;
-};
+import { Game } from 'src/common/types/games';
 
 @Injectable()
 export class GamesService {

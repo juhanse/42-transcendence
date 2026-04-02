@@ -10,7 +10,6 @@ export class GamesGateway {
 
 	constructor(private readonly gamesService: GamesService) { }
 
-	// 🔹 CREATE GAME
 	@SubscribeMessage('createGame')
 	handleCreateGame(@MessageBody() body: CreateGame, @ConnectedSocket() client: Socket) {
 		const game = this.gamesService.createGame(body.userId, body.miniGames);
@@ -20,7 +19,6 @@ export class GamesGateway {
 		return { code: game.code };
 	}
 
-	// 🔹 JOIN GAME
 	@SubscribeMessage('joinGame')
 	handleJoinGame(@MessageBody() body: InteractGame, @ConnectedSocket() client: Socket) {
 		const game = this.gamesService.joinGame(body.code, body.userId, client.id);
@@ -34,7 +32,6 @@ export class GamesGateway {
 		return { success: true };
 	}
 
-	// 🔹 START GAME
 	@SubscribeMessage('startGame')
 	handleStartGame(@MessageBody() body: InteractGame) {
 		const game = this.gamesService.startGame(body.code, body.userId);
@@ -44,7 +41,6 @@ export class GamesGateway {
 		});
 	}
 
-	// 🔹 SCORE UPDATE
 	@SubscribeMessage('submitScore')
 	handleScore(@MessageBody() body: PointsGame) {
 		this.gamesService.addScore(body.code, body.userId, body.points);
@@ -53,7 +49,6 @@ export class GamesGateway {
 		this.server.to(body.code).emit('leaderboardUpdate', leaderboard);
 	}
 
-	// 🔹 NEXT MINI GAME
 	@SubscribeMessage('nextMiniGame')
 	handleNext(@MessageBody() body: { code: string }) {
 		const next = this.gamesService.nextMiniGame(body.code);
